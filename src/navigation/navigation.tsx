@@ -53,7 +53,7 @@ const MainNavigation = () => {
       dispatch(
         setAuth({
           token: token,
-          email : email
+          email: email,
         }),
       );
     } catch (e) {
@@ -62,21 +62,16 @@ const MainNavigation = () => {
     }
   };
 
-  const removeItem = async key => {
-    try {
-      await AsyncStorage.removeItem(key);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  };
 
   useEffect(() => {
     getData();
-    // removeItem('token');
   }, []);
 
-  console.log('line 77 ', authData?.token);
+
+
+
+
+  console.log('line 77 ', authData);
 
   // if (authData?.token) {
   //   console.log('log');
@@ -84,21 +79,26 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="HomeStack"
+        initialRouteName="Auth"
         screenOptions={{ headerShown: false }}>
-        {/* {authData?.token ? ( */}
+        {authData?.token ? (
           <Stack.Screen
             name="HomeStack"
             options={{ headerShown: false }}
             component={MyTabs}
           />
-        {/* ) : ( */}
+        ) : (
           <Stack.Screen
             name="Auth"
             options={{ headerShown: false }}
             component={LoginScreen}
           />
-        {/* )} */}
+        )}
+        <Stack.Screen
+          name="AuthRootStack"
+          options={{ headerShown: false }}
+          component={MyTabs}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

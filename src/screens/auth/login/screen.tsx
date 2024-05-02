@@ -10,6 +10,7 @@ import { store } from '../../../store';
 import { setAuth } from '../../../store/authSlice/slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { storeAsync } from '../../../utils/async';
 
 const LoginScreen = () => {
   const [email, setEmail] = React.useState('');
@@ -41,8 +42,8 @@ const LoginScreen = () => {
         console.log('api error', _res.error);
       } else if (_res.token) {
         setToken(_res.token);
-        navigation.navigate('Home', {
-          screen: 'HomeScreen',
+        navigation.navigate('AuthRootStack', {
+          screen: 'Home',
         });
         setError('');
         // console.log('api token', _res.token);
@@ -64,13 +65,6 @@ const LoginScreen = () => {
     }
   };
 
-  const storeAsync = async (key:string,value: string) => {
-    try {
-      await AsyncStorage.setItem(key, value);
-    } catch (e) {
-      console.log('error while storing the token', e);
-    }
-  };
   // eve.holt@reqres.in
 
   const getData = async () => {

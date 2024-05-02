@@ -6,13 +6,14 @@ import { colors } from '../../utils/colors';
 import InputComponent from '../../components/input/component';
 import ButtonComponent from '../../components/button/component';
 import { setEmploye } from '../../store/employeSlice/slice';
+import { storeAsync } from '../../utils/async';
 
 const HomeScreen = () => {
   const authData: any = useSelector(state => state);
   const [data, setData] = React.useState({});
 
 
-  
+
   console.log('auth', authData?.employee);
   const dispatch = useDispatch();
 

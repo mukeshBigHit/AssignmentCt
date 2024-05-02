@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { colors } from '../../utils/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setEmploye } from '../../store/employeSlice/slice';
 
 const EmployeScreen = () => {
   const authData: any = useSelector(state => state);
-
-  console.log('auth', authData?.employee);
+  const dispatch = useDispatch();
 
   const renderItem = ({ item }: any) => {
     console.log('item', item);
