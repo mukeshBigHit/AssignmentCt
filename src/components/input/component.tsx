@@ -14,6 +14,7 @@ const InputComponent = ({
   onChange,
   value,
   placeholder,
+
 }: InputComponentProps) => {
   return (
     <View style={styles.container}>
