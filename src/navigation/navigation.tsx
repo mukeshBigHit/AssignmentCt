@@ -1,11 +1,11 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home/Home.screen';
-import Profile from '../screens/Profile/Profile.screen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import EmployeScreen from '../screens/employe/screen';
+import HomeScreen from '../screens/home/screen';
+import LoginScreen from '../screens/auth/login/screen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -14,8 +14,8 @@ function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }: any) => {
@@ -24,8 +24,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="EmployeScreen"
+        component={EmployeScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }: any) => {
@@ -40,13 +40,19 @@ function MyTabs() {
 const MainNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator 
+        initialRouteName='Auth'
+        screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="HomeBase"
           options={{ headerShown: false }}
           component={MyTabs}
         />
-        {/* add your another screen here using -> Stack.Screen */}
+        <Stack.Screen
+        name="Auth"
+        options={{ headerShown: false }}
+        component={LoginScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
