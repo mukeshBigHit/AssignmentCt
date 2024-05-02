@@ -8,6 +8,8 @@ import { colors } from '../../../utils/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../store';
 import { setAuth } from '../../../store/authSlice/slice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
   const [isSplash, setIsSplash] = React.useState(true);
@@ -15,9 +17,12 @@ const LoginScreen = () => {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [token, setToken] = React.useState('');
-  const authData = useSelector(state => state);
+  const navigation = useNavigation();
+  const authData: any = useSelector(state => state);
   const dispatch = useDispatch();
 
+
+  
   console.log('auth', authData);
   // setTimeout(() => {
   //   setIsSplash(false);
@@ -44,6 +49,9 @@ const LoginScreen = () => {
         console.log('api error', _res.error);
       } else if (_res.token) {
         setToken(_res.token);
+        navigation.navigate('Home',{
+          screen : 'HomeScreen'
+        })
         setError('');
         console.log('api token', _res.token);
         dispatch(
@@ -52,6 +60,7 @@ const LoginScreen = () => {
             token: _res.token,
           }),
         );
+        storeToken(_res.token);
       } else {
         console.log('api response', _res);
         setError('');
@@ -62,8 +71,25 @@ const LoginScreen = () => {
     }
   };
 
-  console.log('token', token);
+  const storeToken = async (value: string) => {
+    try {
+      await AsyncStorage.setItem('token', value);
+    } catch (e) {
+      console.log('error while storing the token', e);
+    }
+  };
   // eve.holt@reqres.in
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('token');
+      console.log('token', jsonValue);
+    } catch (e) {
+      console.log('error while getting the token', e);
+      // error reading value
+    }
+  };
+
 
   return (
     <View style={styles.container}>
