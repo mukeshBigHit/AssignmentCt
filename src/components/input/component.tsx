@@ -4,7 +4,7 @@ import { colors } from '../../utils/colors';
 
 interface InputComponentProps {
   multiline?: boolean;
-  onChange: () => void;
+  onChange: (e:string) => any;
   value: string;
   placeholder: string;
 }
@@ -19,7 +19,7 @@ const InputComponent = ({
     <View style={styles.container}>
       <TextInput
         multiline
-        onChange={onChange}
+        onChangeText={onChange}
         value={value}
         placeholderTextColor={colors.primary}
         placeholder={placeholder}
