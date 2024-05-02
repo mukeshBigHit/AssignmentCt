@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import MainNavigation from './navigation/navigation';
 import { store } from './store';
 import { Provider, useDispatch } from 'react-redux';
-
+import SplashView from './views/splash/view';
 
 if (__DEV__) {
   console.log('Reactotron Configured');
@@ -11,7 +11,13 @@ if (__DEV__) {
 }
 
 const App = () => {
-  // const [loading, setLoading] = React.useState(false);
+  const [isSplash, setIsSplash] = React.useState(true);
+
+  setTimeout(() => {
+    setIsSplash(false);
+  }, 2000);
+
+  if (isSplash) return <SplashView />;
 
   // const getData = async () => {
   //   setLoading(true);
@@ -26,7 +32,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-       <MainNavigation />
+      <MainNavigation />
     </Provider>
   );
 };

@@ -4,7 +4,7 @@ import React from 'react'
 const EmployeScreen = () => {
   return (
     <View>
-      <Text>screen</Text>
+      <Text>Employe Screen</Text>
     </View>
   )
 }

@@ -9,6 +9,7 @@ import LoginScreen from '../screens/auth/login/screen';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../store/authSlice/slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,7 +18,7 @@ function MyTabs() {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="HomeScreen"
+        name="Home"
         component={HomeScreen}
         options={{
           headerShown: false,
@@ -27,12 +28,12 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="EmployeScreen"
+        name="Employees"
         component={EmployeScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }: any) => {
-            return <Icon name={'finger-print-sharp'} size={25} color={color} />;
+            return <Ionicons name={'people'} size={25} color={color} />;
           },
         }}
       />
@@ -46,11 +47,13 @@ const MainNavigation = () => {
 
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('token');
-      console.log('async store token', jsonValue);
+      const token = await AsyncStorage.getItem('token');
+      const email = await AsyncStorage.getItem('email');
+      // console.log('async store token', token);
       dispatch(
         setAuth({
-          token: jsonValue,
+          token: token,
+          email : email
         }),
       );
     } catch (e) {
@@ -81,11 +84,11 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeStack"
         screenOptions={{ headerShown: false }}>
         {/* {authData?.token ? ( */}
           <Stack.Screen
-            name="Home"
+            name="HomeStack"
             options={{ headerShown: false }}
             component={MyTabs}
           />

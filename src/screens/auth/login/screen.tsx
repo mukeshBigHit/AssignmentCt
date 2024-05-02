@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
-  const [isSplash, setIsSplash] = React.useState(true);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
@@ -21,14 +20,7 @@ const LoginScreen = () => {
   const authData: any = useSelector(state => state);
   const dispatch = useDispatch();
 
-
-  
-  console.log('auth', authData);
-  // setTimeout(() => {
-  //   setIsSplash(false);
-  // }, 2000);
-
-  // if (isSplash) return <SplashView />;
+  // console.log('auth', authData);
 
   const onSubmit = async () => {
     try {
@@ -49,18 +41,19 @@ const LoginScreen = () => {
         console.log('api error', _res.error);
       } else if (_res.token) {
         setToken(_res.token);
-        navigation.navigate('Home',{
-          screen : 'HomeScreen'
-        })
+        navigation.navigate('Home', {
+          screen: 'HomeScreen',
+        });
         setError('');
-        console.log('api token', _res.token);
+        // console.log('api token', _res.token);
         dispatch(
           setAuth({
             email,
             token: _res.token,
           }),
         );
-        storeToken(_res.token);
+        storeAsync('token',_res.token);
+        storeAsync('email',email);
       } else {
         console.log('api response', _res);
         setError('');
@@ -71,9 +64,9 @@ const LoginScreen = () => {
     }
   };
 
-  const storeToken = async (value: string) => {
+  const storeAsync = async (key:string,value: string) => {
     try {
-      await AsyncStorage.setItem('token', value);
+      await AsyncStorage.setItem(key, value);
     } catch (e) {
       console.log('error while storing the token', e);
     }
@@ -89,7 +82,6 @@ const LoginScreen = () => {
       // error reading value
     }
   };
-
 
   return (
     <View style={styles.container}>
