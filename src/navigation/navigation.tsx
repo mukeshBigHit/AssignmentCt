@@ -62,14 +62,9 @@ const MainNavigation = () => {
     }
   };
 
-
   useEffect(() => {
     getData();
   }, []);
-
-
-
-
 
   console.log('line 77 ', authData);
 
@@ -79,7 +74,7 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Auth"
+        initialRouteName={authData?.token ? 'HomeStack' : 'Auth'}
         screenOptions={{ headerShown: false }}>
         {authData?.token ? (
           <Stack.Screen
@@ -94,11 +89,6 @@ const MainNavigation = () => {
             component={LoginScreen}
           />
         )}
-        <Stack.Screen
-          name="AuthRootStack"
-          options={{ headerShown: false }}
-          component={MyTabs}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
